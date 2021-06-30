@@ -1,0 +1,27 @@
+{
+  "name": "@educational-technology-collective/etc_http_aws_api_gateway_wrapper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "ts-loader": "^9.2.3",
+    "typescript": "^4.3.4",
+    "webpack": "^5.41.1",
+    "webpack-cli": "^4.7.2"
+  },
+  "scripts": {
+    "build": "npx tsc",
+    "build:test": "npm run build && npx webpack build -c ./test/webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/educational-technology-collective/etc_http_aws_api_gateway_wrapper.git"
+  },
+  "author": "ETC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/educational-technology-collective/etc_http_aws_api_gateway_wrapper/issues"
+  },
+  "homepage": "https://github.com/educational-technology-collective/etc_http_aws_api_gateway_wrapper#readme"
+}
