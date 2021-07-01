@@ -1,6 +1,6 @@
 {
   "name": "@educational-technology-collective/etc_http_aws_api_gateway_wrapper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/index.js",
   "dependencies": {},
