@@ -7,9 +7,9 @@ export declare class AWSAPIGatewayWrapperAsync {
         url: string;
         bucket: string;
         path: string;
-        retry: number;
+        retry: number | null;
     });
-    request(data: any): Promise<any>;
+    request(data: any): Promise<Response>;
 }
 export declare class AWSAPIGatewayWrapper extends AWSAPIGatewayWrapperAsync {
     private _errorHandler;
@@ -17,7 +17,7 @@ export declare class AWSAPIGatewayWrapper extends AWSAPIGatewayWrapperAsync {
         url: string;
         bucket: string;
         path: string;
-        retry: number;
+        retry: number | null;
         errorHandler?: (e: any) => void;
     });
     request(data: any): any | void;

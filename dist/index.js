@@ -34,7 +34,7 @@ class AWSAPIGatewayWrapperAsync {
         }
         catch (e) {
             if (typeof this._retry == "number") {
-                //setTimeout(this.request, this._retry, data);
+                setTimeout(this.request, this._retry, data);
             }
             throw e;
         }
@@ -42,7 +42,7 @@ class AWSAPIGatewayWrapperAsync {
 }
 exports.AWSAPIGatewayWrapperAsync = AWSAPIGatewayWrapperAsync;
 class AWSAPIGatewayWrapper extends AWSAPIGatewayWrapperAsync {
-    constructor({ url, bucket, path, retry = 0, errorHandler = console.error }) {
+    constructor({ url, bucket, path, retry = 1000, errorHandler = console.error }) {
         super({ url, bucket, path, retry });
         this._errorHandler = errorHandler;
     }

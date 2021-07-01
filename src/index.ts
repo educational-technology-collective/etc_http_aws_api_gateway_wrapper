@@ -3,11 +3,11 @@ export class AWSAPIGatewayWrapperAsync {
     private _url: string;
     private _bucket: string;
     private _path: string;
-    private _retry: number;
+    private _retry: number | null;
 
     constructor(
         { url, bucket, path, retry = 1000 }:
-            { url: string, bucket: string, path: string, retry: number }) {
+            { url: string, bucket: string, path: string, retry: number | null }) {
 
         this._url = url;
         this._bucket = bucket;
@@ -17,7 +17,7 @@ export class AWSAPIGatewayWrapperAsync {
         this.request = this.request.bind(this);
     }
 
-    async request(data: any): Promise<any> {
+    async request(data: any): Promise<Response> {
 
         let response: Response;
 
@@ -57,13 +57,12 @@ export class AWSAPIGatewayWrapperAsync {
     }
 }
 
-
 export class AWSAPIGatewayWrapper extends AWSAPIGatewayWrapperAsync {
     private _errorHandler: ((e: any) => void) | undefined | null;
 
     constructor(
-        { url, bucket, path, retry = 0, errorHandler = console.error }:
-            { url: string, bucket: string, path: string, retry: number, errorHandler?: (e: any) => void }) {
+        { url, bucket, path, retry = 1000, errorHandler = console.error }:
+            { url: string, bucket: string, path: string, retry: number | null, errorHandler?: (e: any) => void }) {
         super({ url, bucket, path, retry });
 
         this._errorHandler = errorHandler;
@@ -80,6 +79,5 @@ export class AWSAPIGatewayWrapper extends AWSAPIGatewayWrapperAsync {
                 }
             }
         })();
-
     }
 }
