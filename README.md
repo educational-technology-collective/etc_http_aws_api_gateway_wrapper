@@ -32,8 +32,7 @@ import { AWSAPIGatewayWrapper } from "@educational-technology-collective/etc_htt
 
 ### Instantiating AWSAPIGatewayWrapper
 
-constructor
-
+**constructor**
  * options \<Object\>
    * url \<string\> The URL for the AWS API.
    * bucket \<string\> The name of the AWS S3 Bucket.
@@ -41,11 +40,11 @@ constructor
    * retry \<number\> An optional number of seconds to wait before retrying after an error. This argument is only relevant when using the AWSAPIGatewayWrapper#request method.  Default: 1000
    * errorHandler \<Function\> An optional error handler.  Default: console.error.
 
-AWSAPIGatewayWrapper#requestAsync(data)
+**AWSAPIGatewayWrapper#requestAsync(data)**
  * data \<any\> The object or primitive that will be JSON serialized and logged to the S3 Bucket.
  * Returns: \<Promise\<Response\>\>
 
- AWSAPIGatewayWrapper#request(data)
+**AWSAPIGatewayWrapper#request(data)**
  * data \<any\> The object or primitive that will be JSON serialized and logged to the S3 Bucket.
  * Returns: \<void\>
 
@@ -83,7 +82,7 @@ let awsAPIGatewayWrapper: AWSAPIGatewayWrapper = new AWSAPIGatewayWrapper(
 awsAPIGatewayWrapper.request(["This request was made by AWSAPIGatewayWrapper#request.", timestamp]);
 ```
 
-This is an example of making a `asynchronous` HTTP request to an S3 bucket.
+This is an example of making an `asynchronous` HTTP request to an S3 bucket.
 
 ```js
 
