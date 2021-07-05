@@ -1,23 +1,43 @@
-export class AWSAPIGatewayWrapperAsync {
+export class AWSAPIGatewayWrapper {
 
     private _url: string;
     private _bucket: string;
     private _path: string;
     private _retry: number | null;
+    private _errorHandler: (e: any) => void
 
     constructor(
-        { url, bucket, path, retry = 1000 }:
-            { url: string, bucket: string, path: string, retry: number | null }) {
+        { url, bucket, path, retry = 1000, errorHandler = console.error }:
+            { url: string, bucket: string, path: string, retry: number | null, errorHandler: (e: any) => void }) {
 
         this._url = url;
         this._bucket = bucket;
         this._path = path;
         this._retry = retry;
+        this._errorHandler = errorHandler;
 
         this.request = this.request.bind(this);
     }
 
-    async request(data: any): Promise<Response> {
+    request(data: any): any | void {
+        (async () => {
+            try {
+                await this.requestAsync(data);
+            }
+            catch (e) {
+
+                if (typeof this._errorHandler == "function") {
+                    this._errorHandler(e);
+                }
+
+                if (typeof this._retry == "number") {
+                    setTimeout(this.request, this._retry, data);
+                }
+            }
+        })();
+    }
+
+    async requestAsync(data: any): Promise<Response> {
 
         let response: Response;
 
@@ -48,36 +68,12 @@ export class AWSAPIGatewayWrapperAsync {
         }
         catch (e) {
 
-            if (typeof this._retry == "number") {
-                setTimeout(this.request, this._retry, data);
+            if (typeof this._errorHandler == "function") {
+                this._errorHandler(e);
             }
-
+            
             throw e;
         }
     }
 }
 
-export class AWSAPIGatewayWrapper extends AWSAPIGatewayWrapperAsync {
-    private _errorHandler: ((e: any) => void) | undefined | null;
-
-    constructor(
-        { url, bucket, path, retry = 1000, errorHandler = console.error }:
-            { url: string, bucket: string, path: string, retry: number | null, errorHandler?: (e: any) => void }) {
-        super({ url, bucket, path, retry });
-
-        this._errorHandler = errorHandler;
-    }
-
-    request(data: any): any | void {
-        (async () => {
-            try {
-                await super.request(data);
-            }
-            catch (e) {
-                if (typeof this._errorHandler == "function") {
-                    this._errorHandler(e);
-                }
-            }
-        })();
-    }
-}

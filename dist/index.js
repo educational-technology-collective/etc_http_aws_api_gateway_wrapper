@@ -1,15 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AWSAPIGatewayWrapper = exports.AWSAPIGatewayWrapperAsync = void 0;
-class AWSAPIGatewayWrapperAsync {
-    constructor({ url, bucket, path, retry = 1000 }) {
+exports.AWSAPIGatewayWrapper = void 0;
+class AWSAPIGatewayWrapper {
+    constructor({ url, bucket, path, retry = 1000, errorHandler = console.error }) {
         this._url = url;
         this._bucket = bucket;
         this._path = path;
         this._retry = retry;
+        this._errorHandler = errorHandler;
         this.request = this.request.bind(this);
     }
-    async request(data) {
+    request(data) {
+        (async () => {
+            try {
+                await this.requestAsync(data);
+            }
+            catch (e) {
+                if (typeof this._errorHandler == "function") {
+                    this._errorHandler(e);
+                }
+                if (typeof this._retry == "number") {
+                    setTimeout(this.request, this._retry, data);
+                }
+            }
+        })();
+    }
+    async requestAsync(data) {
         let response;
         try {
             response = await fetch([this._url, this._bucket, this._path].join("/"), {
@@ -33,30 +49,11 @@ class AWSAPIGatewayWrapperAsync {
             return response;
         }
         catch (e) {
-            if (typeof this._retry == "number") {
-                setTimeout(this.request, this._retry, data);
+            if (typeof this._errorHandler == "function") {
+                this._errorHandler(e);
             }
             throw e;
         }
-    }
-}
-exports.AWSAPIGatewayWrapperAsync = AWSAPIGatewayWrapperAsync;
-class AWSAPIGatewayWrapper extends AWSAPIGatewayWrapperAsync {
-    constructor({ url, bucket, path, retry = 1000, errorHandler = console.error }) {
-        super({ url, bucket, path, retry });
-        this._errorHandler = errorHandler;
-    }
-    request(data) {
-        (async () => {
-            try {
-                await super.request(data);
-            }
-            catch (e) {
-                if (typeof this._errorHandler == "function") {
-                    this._errorHandler(e);
-                }
-            }
-        })();
     }
 }
 exports.AWSAPIGatewayWrapper = AWSAPIGatewayWrapper;
