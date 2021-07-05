@@ -37,8 +37,8 @@ import { AWSAPIGatewayWrapper } from "@educational-technology-collective/etc_htt
    * url \<string\> The URL for the AWS API.
    * bucket \<string\> The name of the AWS S3 Bucket.
    * path \<string\> The path of the object that will be saved into the S3 bucket.
-   * retry \<number\> An optional number of seconds to wait before retrying after an error. This argument is only relevant when using the AWSAPIGatewayWrapper#request method.  Default: 1000
-   * errorHandler \<Function\> An optional error handler.  Default: console.error.
+   * retry \<number\> An optional number of seconds to wait before retrying after an error. This argument is relevant only when using the AWSAPIGatewayWrapper#request method.  It is ignored by AWSAPIGatewayWrapper#requestAsync.  Set this to null for no retry.  Default: 1000
+   * errorHandler \<Function\> An optional error handler.  Set this to null in order to disable it.  Default: console.error.
 
 **AWSAPIGatewayWrapper#requestAsync(data)**
  * data \<any\> The object or primitive that will be JSON serialized and logged to the S3 Bucket.
@@ -93,7 +93,6 @@ let awsAPIGatewayWrapper: AWSAPIGatewayWrapper = new AWSAPIGatewayWrapper(
         url: "https://exmaple.com",
         bucket: "the-name-of-the-bucket",
         path: "the-name-of-the-path",
-        retry: 1000,
         errorHandler: console.error
     });
 

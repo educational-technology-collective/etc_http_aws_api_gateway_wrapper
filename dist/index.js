@@ -9,6 +9,7 @@ class AWSAPIGatewayWrapper {
         this._retry = retry;
         this._errorHandler = errorHandler;
         this.request = this.request.bind(this);
+        this.requestAsync = this.requestAsync.bind(this);
     }
     request(data) {
         (async () => {
@@ -16,9 +17,6 @@ class AWSAPIGatewayWrapper {
                 await this.requestAsync(data);
             }
             catch (e) {
-                if (typeof this._errorHandler == "function") {
-                    this._errorHandler(e);
-                }
                 if (typeof this._retry == "number") {
                     setTimeout(this.request, this._retry, data);
                 }

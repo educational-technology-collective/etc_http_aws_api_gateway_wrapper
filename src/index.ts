@@ -8,7 +8,13 @@ export class AWSAPIGatewayWrapper {
 
     constructor(
         { url, bucket, path, retry = 1000, errorHandler = console.error }:
-            { url: string, bucket: string, path: string, retry: number | null, errorHandler: (e: any) => void }) {
+            { 
+                url: string, 
+                bucket: string, 
+                path: string, 
+                retry: number | null, 
+                errorHandler: (e: any) => void 
+            }) {
 
         this._url = url;
         this._bucket = bucket;
@@ -17,6 +23,7 @@ export class AWSAPIGatewayWrapper {
         this._errorHandler = errorHandler;
 
         this.request = this.request.bind(this);
+        this.requestAsync = this.requestAsync.bind(this);
     }
 
     request(data: any): any | void {
@@ -25,10 +32,6 @@ export class AWSAPIGatewayWrapper {
                 await this.requestAsync(data);
             }
             catch (e) {
-
-                if (typeof this._errorHandler == "function") {
-                    this._errorHandler(e);
-                }
 
                 if (typeof this._retry == "number") {
                     setTimeout(this.request, this._retry, data);
