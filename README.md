@@ -7,11 +7,11 @@ The Wrapper logs errors to console.error by default.
 
 The Wrapper has two methods: `AWSAPIGatewayWrapper#request` and `AWSAPIGatewayWrapper#requestAsync`.
 
-`AWSAPIGatewayWrapper#request` will handle erros by logging the error to the `errorHandler` specified in the constructor.  It will then continue to retry the request after the number seconds specified by the constructor's `retry` argument.
+`AWSAPIGatewayWrapper#request` will handle errors by logging the error to the `errorHandler` specified in the constructor.  In the event of an error, it will then continue to retry the request after the number of seconds specified by the constructor's `retry` argument.
 
 `AWSAPIGatewayWrapper#requestAsync` will return a Promise that will resolve with a `Response` object or reject with an error.  This method does not automatically retry the request if an error happens.  It gives you more control over error handling.
 
-Each logged S3 object is named by the AWS Gateway server using a combination of timestamp and UUID.  E.g., `1625155259384-9a47660f-3ffe-469d-b1d5-2de875a6a022`. In this example, `1625155259384` is the timestamp and `9a47660f-3ffe-469d-b1d5-2de875a6a022` is the UUID.
+Each logged S3 object is named by the AWS Gateway server using a combination of timestamp and UUID.  E.g., `1625155259384-9a47660f-3ffe-469d-b1d5-2de875a6a022`. In that example, `1625155259384` is the timestamp and `9a47660f-3ffe-469d-b1d5-2de875a6a022` is the UUID.
 
 ## Installation Instructions
 
