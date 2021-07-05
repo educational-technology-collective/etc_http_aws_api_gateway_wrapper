@@ -35,7 +35,7 @@ class AWSAPIGatewayWrapper {
                 },
                 redirect: "follow",
                 referrerPolicy: "no-referrer",
-                body: JSON.stringify({ data: data })
+                body: JSON.stringify(data)
             });
             if (response.status !== 200) {
                 throw new Error(JSON.stringify({

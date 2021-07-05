@@ -54,7 +54,7 @@ let awsAPIGatewayWrapper: AWSAPIGatewayWrapper = new AWSAPIGatewayWrapper(
     {
         url: "https://exmaple.com",
         bucket: "the-name-of-the-bucket",
-        path: "the-name-of-the-path",
+        path: "the-path", // e.g., path/to/resource
         retry: 1000,
         errorHandler: console.error
     });
@@ -74,7 +74,7 @@ let awsAPIGatewayWrapper: AWSAPIGatewayWrapper = new AWSAPIGatewayWrapper(
     {
         url: "https://exmaple.com",
         bucket: "the-name-of-the-bucket",
-        path: "the-name-of-the-path",
+        path: "the-path", // e.g., path/to/resource
         retry: 1000,
         errorHandler: console.error
     });
@@ -92,7 +92,7 @@ let awsAPIGatewayWrapper: AWSAPIGatewayWrapper = new AWSAPIGatewayWrapper(
     {
         url: "https://exmaple.com",
         bucket: "the-name-of-the-bucket",
-        path: "the-name-of-the-path",
+        path: "the-path", // e.g., path/to/resource
         errorHandler: console.error
     });
 
