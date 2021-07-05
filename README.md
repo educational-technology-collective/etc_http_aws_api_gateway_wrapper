@@ -83,21 +83,48 @@ let awsAPIGatewayWrapper: AWSAPIGatewayWrapper = new AWSAPIGatewayWrapper(
 
 ### Complete Example
 
-This is an example of instantiating a Wrapper and logging a message to an S3 bucket.
+This is an example of instantiating a `synchronous` Wrapper and logging a message to an S3 bucket.
 
 ```js
-import { AWSAPIGatewayWrapperAsync, AWSAPIGatewayWrapper } from "@educational-technology-collective/etc_http_aws_api_gateway_wrapper";
+import { AWSAPIGatewayWrapper } from "@educational-technology-collective/etc_http_aws_api_gateway_wrapper";
 
 let awsAPIGatewayWrapper: AWSAPIGatewayWrapper = new AWSAPIGatewayWrapper(
     {
-        url: "https://example.com",
-        bucket: "the-buket-name",
-        path: "the-path-in-the-bucket",
+        url: "https://exmaple.com",
+        bucket: "the-name-of-the-bucket",
+        path: "the-path",
         retry: 1000,
         errorHandler: console.error
     });
 
+
 let timestamp: number = Date.now();
 
 awsAPIGatewayWrapper.request(timestamp);
+```
+
+This is an example of instantiating an `asynchronous` Wrapper and logging a message to an S3 bucket.
+
+```js
+import { AWSAPIGatewayWrapperAsync } from "@educational-technology-collective/etc_http_aws_api_gateway_wrapper";
+
+(async function () {
+
+    try {
+        let awsAPIGatewayWrapperAsync: AWSAPIGatewayWrapperAsync = new AWSAPIGatewayWrapperAsync(
+            {
+                url: "https://exmaple.com",
+                bucket: "the-name-of-the-bucket",
+                path: "the-path",
+                retry: 1000
+            });
+
+        let timestamp: number = Date.now();
+
+        await awsAPIGatewayWrapperAsync.request(timestamp);
+    }
+    catch (e) {
+        console.error(e);
+    }
+})();
 ```
