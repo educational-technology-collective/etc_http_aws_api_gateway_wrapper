@@ -8,10 +8,10 @@ export declare class AWSAPIGatewayWrapper {
         url: string;
         bucket: string;
         path: string;
-        retry: number | null;
-        errorHandler: (e: any) => void;
+        retry?: number | null;
+        errorHandler?: (e: any) => void | null;
     });
-    request(data: any): any | void;
+    request(data: any): void;
     requestAsync(data: any): Promise<Response>;
 }
 //# sourceMappingURL=index.d.ts.map

@@ -3,13 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AWSAPIGatewayWrapper = void 0;
 class AWSAPIGatewayWrapper {
     constructor({ url, bucket, path, retry = 1000, errorHandler = console.error }) {
+        this.request = this.request.bind(this);
+        this.requestAsync = this.requestAsync.bind(this);
         this._url = url;
         this._bucket = bucket;
         this._path = path;
         this._retry = retry;
         this._errorHandler = errorHandler;
-        this.request = this.request.bind(this);
-        this.requestAsync = this.requestAsync.bind(this);
     }
     request(data) {
         (async () => {

@@ -4,29 +4,29 @@ export class AWSAPIGatewayWrapper {
     private _bucket: string;
     private _path: string;
     private _retry: number | null;
-    private _errorHandler: (e: any) => void
+    private _errorHandler: (e: any) => void | null
 
     constructor(
         { url, bucket, path, retry = 1000, errorHandler = console.error }:
-            { 
-                url: string, 
-                bucket: string, 
-                path: string, 
-                retry: number | null, 
-                errorHandler: (e: any) => void 
+            {
+                url: string,
+                bucket: string,
+                path: string,
+                retry?: number | null,
+                errorHandler?: (e: any) => void | null
             }) {
+
+        this.request = this.request.bind(this);
+        this.requestAsync = this.requestAsync.bind(this);
 
         this._url = url;
         this._bucket = bucket;
         this._path = path;
         this._retry = retry;
         this._errorHandler = errorHandler;
-
-        this.request = this.request.bind(this);
-        this.requestAsync = this.requestAsync.bind(this);
     }
 
-    request(data: any): any | void {
+    request(data: any): void {
         (async () => {
             try {
                 await this.requestAsync(data);
@@ -74,7 +74,7 @@ export class AWSAPIGatewayWrapper {
             if (typeof this._errorHandler == "function") {
                 this._errorHandler(e);
             }
-            
+
             throw e;
         }
     }
